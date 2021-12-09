@@ -1,0 +1,17 @@
+{
+    "name": "digiw/apichat",
+    "description": "Api Application Framework",
+    "keywords": ["slim", "react", "ApiCode", "ApiApp"],
+    "license": "MIT",
+    "homepage": "",
+    "type": "component",
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "digiw/api-code": "0.1.0.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "code\\": "src/code/"
+        }
+    }
+}
