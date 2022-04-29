@@ -8,7 +8,7 @@ use code\applications\ApiAppFactory;
 class ChatController extends AppController {
 
     public function __construct() {
-        $this->setComponent(ApiAppFactory::getApp()->getComponent(ApiChat::getComponenteId()));
+        $this->setComponent(ApiAppFactory::getApp()->getComponent(ApiChat::getName()));
     }
 
 }
