@@ -8,7 +8,7 @@ return [
         
                 // API Routes
         
-                ["route" => "/api/user/save", "method" => "POST", "controller" => "\controllers\UserApiController:save"],
+                ["route" => "/api/chat/save", "method" => "POST", "controller" => "\controllers\UserApiController:save"],
                
             ]
 ];
