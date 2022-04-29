@@ -1,8 +1,8 @@
 <?php
 
-namespace controllers;
+namespace code\controllers;
 
-use code\apichat\ApiChat;
+use code\ApiChat;
 use code\applications\ApiAppFactory;
 use Exception;
 use Psr\Http\Message\ResponseInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers;
+namespace code\controllers;
 
 use code\apichat\ApiChat;
 use code\applications\ApiAppFactory;
