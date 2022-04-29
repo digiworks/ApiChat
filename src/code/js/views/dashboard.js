@@ -4,7 +4,7 @@ function IndexPage(props) {
 
     return (
             <div>
-            <span> CHAT </span>
+            <span> {baseApp.translations().t("save", "dashboard")} </span>
             </div>
             );
 }
