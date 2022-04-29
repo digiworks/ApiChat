@@ -4,11 +4,11 @@ return [
     "routes" => [
                 // Views Routes
         
-                ["route" => "/", "method" => "GET", "controller" => "\controllers\HomeController:home"],
+                ["route" => "/chat", "method" => "GET", "controller" => "\controllers\ChatController:home"],
         
                 // API Routes
         
-                ["route" => "/api/chat/save", "method" => "POST", "controller" => "\controllers\UserApiController:save"],
+                ["route" => "/api/chat/save", "method" => "POST", "controller" => "\controllers\ChatApiController:save"],
                
             ]
 ];
