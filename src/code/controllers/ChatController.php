@@ -24,7 +24,7 @@ class ChatController extends AppController {
     public function home(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 
         try {
-            $currentView = 'js/views/index.js';
+            $currentView = 'js/views/dashboard.js';
             $this->setRequest($request)->setResponse($response)->setCurrentView($currentView)->buildViewResponse()->render();
         } catch (Exception $ex) {
             ApiAppFactory::getApp()->getLogger()->error("error", $ex->getMessage());
