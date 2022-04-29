@@ -1,6 +1,6 @@
 <?php
 
-namespace code\apichat;
+namespace code;
 
 use code\components\Component;
 
