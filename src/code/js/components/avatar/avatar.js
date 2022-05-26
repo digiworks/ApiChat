@@ -1,4 +1,4 @@
-class Avatar extends Component {
+class ChatAvatar extends Component {
     state = { avatar: "" }  
 
     updateImg() {
@@ -83,7 +83,7 @@ const styles = {
     }
 }
 
-Avatar.propTypes = {
+ChatAvatar.propTypes = {
     avatar: PropTypes.string,
     username: PropTypes.string,
     style: PropTypes.object,
