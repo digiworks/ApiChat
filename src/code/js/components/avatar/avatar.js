@@ -1,4 +1,4 @@
-class ChatAvatar extends Component {
+class ChatAvatar extends React.Component {
     state = { avatar: "" }  
 
     updateImg() {
