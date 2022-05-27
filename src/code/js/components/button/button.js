@@ -21,11 +21,18 @@ class ChatButton extends React.Component {
                 style={{ ...themeStyle, ...customStyle, ...hoverStyle }}
                 className={`ce-primary-button ${theme === 'danger' ? 'ce-danger-button' : ''}`}
             >
-            { icon === 'plus' && <Icon>add</Icon> }
-            { icon === 'delete'  && <Icon>delete_outline</Icon> }
-            { icon === 'user-add'  && <Icon>person_add</Icon> }
-
-                { value && icon ? ` ${value}` : value}  
+                <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexWrap: 'wrap'
+                }}>
+                        { icon === 'plus' && <Icon >add</Icon> }
+                        { icon === 'delete'  && <Icon>delete_outline</Icon> }
+                        { icon === 'user-add'  && <Icon>person_add</Icon> }
+                    <span style={{ paddingLeft: "3px"}}>
+                        {value}  
+                    </span>
+                </div> 
             </button>
         )
     }
@@ -53,7 +60,7 @@ const styles = {
         padding: '8px 16px',
         borderRadius: '33px',
         backgroundColor: 'white',
-        border: '1px solid red',
+        border: '1px solid red'
     },
     hoverButton: {
         opacity: '0.66',
@@ -67,6 +74,6 @@ ChatButton.propTypes = {
     id: PropTypes.string,
     icon: PropTypes.oneOf([undefined, 'plus', 'delete', 'user-add']),
     theme: PropTypes.oneOf([undefined, 'danger']),
-    type: PropTypes.oneOf([undefined, 'submit']), 
+    type: PropTypes.oneOf([undefined, 'submit']) 
 }
 
