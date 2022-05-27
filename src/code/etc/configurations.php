@@ -10,7 +10,8 @@ return Arr::mergeRecursive(
                         ['lib' => 'js/react-spring-web/9.1.2/index.umd.js', 'tranlsator' => ''],
                         ['lib' => 'js/components/avatar/avatar.js', 'tranlsator' => 'text/babel'],
                         ['lib' => 'js/components/float/float.js', 'tranlsator' => 'text/babel'],
-                         ['lib' => 'js/components/boop/boop.js', 'tranlsator' => 'text/babel'],
+                        ['lib' => 'js/components/boop/boop.js', 'tranlsator' => 'text/babel'],
+                        ['lib' => 'js/components/button/button.js', 'tranlsator' => 'text/babel'],
                     ],
                 ],
                 require 'routes.php');
