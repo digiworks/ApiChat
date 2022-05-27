@@ -1,18 +1,14 @@
 
 const { useSpring, animated } = ReactSpring;
 
-function useFloat({
+function useBoop({
     x = 0,
     y = 0,
     rotation = 0,
     scale = 1,
     timing = 150,
-    shadowX = 50,
-    shadowY = 50,
-    shadowBlur = 50,
-    shadowColor = "245,245,200",
     springConfig = {
-        tension: 40,
+        tension: 300,
         friction: 10
     },
     width = 'auto'
@@ -21,9 +17,6 @@ function useFloat({
     const style = useSpring({
         display: 'inline-block',
         backfaceVisibility: 'hidden',
-        boxShadow: isBooped 
-        ? `${shadowX} ${shadowY} ${shadowBlur} ${shadowBlur} rgba(${shadowColor})` 
-        : '0px 0px 0px 0px rgba(223,223,223)',
         transform: isBooped
         ? `translate(${x}px, ${y}px)
             rotate(${rotation}deg)
@@ -32,7 +25,7 @@ function useFloat({
             rotate(0deg)
             scale(1)`,
         config: springConfig,
-        width: width
+        width: width,
     });
     React.useEffect(() => {
         if (!isBooped) { return; }
@@ -47,13 +40,19 @@ function useFloat({
     return [style, trigger];
 }
 
-const Float = ({ children, triggers=[], ...floatConfig }) => {
-  const [style, trigger] = useFloat(floatConfig);
+const Boop = ({ children, triggers=[], ...boopConfig }) => {
+  const [style, trigger] = useBoop(boopConfig);
+
+  function isTriggerPresent(trigger) {
+    return triggers.indexOf(trigger) !== -1
+  }
 
   return (
     <animated.span 
-      style = {style}
-      onMouseEnter = {trigger} 
+      style={style}
+      onClick ={() => isTriggerPresent('onClick') && trigger()}
+      onMouseEnter={() => isTriggerPresent('onMouseEnter') && trigger()} 
+      onMouseLeave={() => isTriggerPresent('onMouseLeave') && trigger()} 
     >
       {children}
     </animated.span>
