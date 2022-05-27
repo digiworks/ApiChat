@@ -1,4 +1,5 @@
 baseApp.translations().loadResourceBundle("en", "dashboard", {
+     add: "Add",
     save: "Save",
     user_list: "User list",
     name: "Name",
@@ -11,6 +12,7 @@ baseApp.translations().loadResourceBundle("en", "dashboard", {
 }, true, true);
 
 baseApp.translations().loadResourceBundle("it", "dashboard", {
+    add: "Aggiungi",
     save: "Salva",
     user_list: "Lista utenti",
     name: "Nome",

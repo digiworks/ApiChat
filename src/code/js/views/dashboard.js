@@ -120,7 +120,7 @@ function IndexPage(props) {
                     <span> {baseApp.translations().t("boop", "dashboard")} </span>
                 </Boop >
                 <Float>
-                    <ChatButton value="Add" icon="user-add"  onClick={handleOpen}/>
+                    <ChatButton value={baseApp.translations().t("add", "dashboard")} icon="user-add"  onClick={handleOpen}/>
                 </Float >
                 <Modal
                     open={open}
