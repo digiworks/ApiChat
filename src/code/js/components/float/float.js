@@ -1,7 +1,7 @@
 
 const { useSpring, animated } = ReactSpring;
 
-function useBoop({
+function useFloat({
     x = 0,
     y = 0,
     rotation = 0,
