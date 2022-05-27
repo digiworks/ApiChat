@@ -7,12 +7,12 @@ function useFloat({
     rotation = 0,
     scale = 1,
     timing = 150,
-    shadowX = 150,
-    shadowY = 150,
-    shadowBlur = 150,
-    shadowColor = 150,
+    shadowX = 50,
+    shadowY = 50,
+    shadowBlur = 50,
+    shadowColor = "245,245,200",
     springConfig = {
-        tension: 300,
+        tension: 40,
         friction: 10
     },
     width = 'auto'
@@ -22,8 +22,8 @@ function useFloat({
         display: 'inline-block',
         backfaceVisibility: 'hidden',
         boxShadow: isBooped 
-        ? `${shadowX} ${shadowY} ${shadowBlur} ${shadowColor}` 
-        : '0px 0px 0px red',
+        ? `${shadowX} ${shadowY} ${shadowBlur} ${shadowBlur} rgba(${shadowColor})` 
+        : '0px 0px 0px 0px rgba(223,223,223)',
         transform: isBooped
         ? `translate(${x}px, ${y}px)
             rotate(${rotation}deg)
@@ -32,7 +32,7 @@ function useFloat({
             rotate(0deg)
             scale(1)`,
         config: springConfig,
-        width: width,
+        width: width
     });
     React.useEffect(() => {
         if (!isBooped) { return; }
