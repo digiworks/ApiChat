@@ -5,6 +5,7 @@
     <column name="userid" type="integer" required="true" />
     <column name="userid_conect" type="integer" required="true" />
     <column name="status" type="integer" required="false"/>
+    <column name="last_message_at" type="timestamp" required="false"/>
     <column name="created_at" type="timestamp" required="false"/>
     <column name="updated_at" type="timestamp" required="false"/>
     <column name="deleted_at" type="timestamp" required="false"/>
@@ -13,6 +14,9 @@
     <column name="deleted_by" type="integer" required="false"/>
     <index name="idx_userid_conect">
         <index-column name="userid_conect" />
+    </index>
+    <index name="idx_last_message_at">
+        <index-column name="last_message_at" />
     </index>
   </table>
   
