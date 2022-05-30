@@ -39,7 +39,7 @@ const ChatLoader = props => {
     const useOnScreen = (ref) => {
         const [isIntersecting, setIntersecting] = React.useState(false);
       
-        const observer = new React.IntersectionObserver(
+        const observer = new IntersectionObserver(
             ([entry]) => {
                 setIntersecting(entry.isIntersecting);
                 if (entry.isIntersecting) {
@@ -52,7 +52,7 @@ const ChatLoader = props => {
           observer.observe(ref.current)
           // Remove the observer as soon as the component is unmounted
           return () => { observer.disconnect() }
-        }, [])
+        }, []);
       
         return isIntersecting
     };
@@ -75,7 +75,8 @@ const ChatList = props => {
     const didMountRef = React.useRef(false);
     const [loadChats, setLoadChats] = React.useState(false); // true, false, or loading
     const [hasMoreChats, setHasMoreChats] =  React.useState(true);
-    const { conn, chats, setChats, setActiveChat } =  React.useContext(ChatEngineContext);
+    const {chats, setChats } =  React.useState({});
+    const {activeChat, setActiveChat} = React.useState(0);
 
     const chatList = sortChats(
         chats ? 
@@ -102,7 +103,7 @@ const ChatList = props => {
         if (!loadChats || loadChats === "loading") return;
         setLoadChats("loading");
 
-        const chatList = chats !== null ? sortChats(Object.values(chats)) : []
+        const chatList = chats !== null ? sortChats(Object.values(chats)) : [];
         if (chatList.length > 0) {
             const before = chatList[chatList.length - 1].created
             getChatsBefore(props, before, interval, (chats) => onGetChats(chats));
