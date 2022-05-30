@@ -1,11 +1,9 @@
 
 
 function getLatestChats(props, count, callback) {
-    axios.get(
-        `${str.getApiUrl(props)}/chats/latest/${count}/`,
-        { headers: getHeaders(props) }
+    BaseApp.get(
+        `/api/chat/latest/${count}/`
     )
-
     .then((response) => {
         // Run hook in Axios on GET requests
         props.onGetChats && props.onGetChats(response.data);
@@ -20,10 +18,9 @@ function getLatestChats(props, count, callback) {
 
 
 function getChatsBefore(props, before, count, callback) {
-    axios.put(
-        `${str.getApiUrl(props)}/chats/latest/${count}/`,
+    BaseApp.put(
+        `/api/chat/latest/${count}/`,
         { before },
-        { headers: getHeaders(props) }
     )
 
     .then((response) => {
@@ -94,8 +91,8 @@ const ChatList = props => {
                 props, 
                 interval, 
                 (chats) => {
-                    onGetChats(chats)
-                    chats.length > 0 && setActiveChat(chats[0].id)
+                    onGetChats(chats);
+                    chats.length > 0 && setActiveChat(chats[0].id);
                 }
             );
         }
@@ -147,7 +144,7 @@ const ChatList = props => {
                     </div>
                 )
             }
-        })
+        });
     };
 
     return (
@@ -171,7 +168,7 @@ const ChatList = props => {
                 }
             </div>
         </div>
-    )
+    );
 };
 
 const styles={
@@ -189,6 +186,6 @@ const styles={
         height: "100%",
         backgroundColor: "white", 
         borderRadius: "0px 0px 24px 24px"
-    },
+    }
 };
 
