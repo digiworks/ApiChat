@@ -90,6 +90,13 @@ abstract class Chats implements ActiveRecordInterface
     protected $status;
 
     /**
+     * The value for the last_message_at field.
+     *
+     * @var        DateTime|null
+     */
+    protected $last_message_at;
+
+    /**
      * The value for the created_at field.
      *
      * @var        DateTime|null
@@ -404,6 +411,28 @@ abstract class Chats implements ActiveRecordInterface
     }
 
     /**
+     * Get the [optionally formatted] temporal [last_message_at] column value.
+     *
+     *
+     * @param string|null $format The date/time format string (either date()-style or strftime()-style).
+     *   If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime|null Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     *
+     * @psalm-return ($format is null ? DateTime|null : string|null)
+     */
+    public function getLastMessageAt($format = null)
+    {
+        if ($format === null) {
+            return $this->last_message_at;
+        } else {
+            return $this->last_message_at instanceof \DateTimeInterface ? $this->last_message_at->format($format) : null;
+        }
+    }
+
+    /**
      * Get the [optionally formatted] temporal [created_at] column value.
      *
      *
@@ -580,6 +609,26 @@ abstract class Chats implements ActiveRecordInterface
     } // setStatus()
 
     /**
+     * Sets the value of [last_message_at] column to a normalized version of the date/time value specified.
+     *
+     * @param  string|integer|\DateTimeInterface|null $v string, integer (timestamp), or \DateTimeInterface value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\code\models\Chats The current object (for fluent API support)
+     */
+    public function setLastMessageAt($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->last_message_at !== null || $dt !== null) {
+            if ($this->last_message_at === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->last_message_at->format("Y-m-d H:i:s.u")) {
+                $this->last_message_at = $dt === null ? null : clone $dt;
+                $this->modifiedColumns[ChatsTableMap::COL_LAST_MESSAGE_AT] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setLastMessageAt()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param  string|integer|\DateTimeInterface|null $v string, integer (timestamp), or \DateTimeInterface value.
@@ -747,22 +796,25 @@ abstract class Chats implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ChatsTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ChatsTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ChatsTableMap::translateFieldName('LastMessageAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->last_message_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ChatsTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ChatsTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ChatsTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ChatsTableMap::translateFieldName('DeletedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ChatsTableMap::translateFieldName('DeletedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->deleted_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ChatsTableMap::translateFieldName('CreatedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ChatsTableMap::translateFieldName('CreatedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->created_by = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ChatsTableMap::translateFieldName('UpdatedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : ChatsTableMap::translateFieldName('UpdatedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->updated_by = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : ChatsTableMap::translateFieldName('DeletedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : ChatsTableMap::translateFieldName('DeletedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->deleted_by = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -772,7 +824,7 @@ abstract class Chats implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = ChatsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = ChatsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\code\\models\\Chats'), 0, $e);
@@ -994,6 +1046,9 @@ abstract class Chats implements ActiveRecordInterface
         if ($this->isColumnModified(ChatsTableMap::COL_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'status';
         }
+        if ($this->isColumnModified(ChatsTableMap::COL_LAST_MESSAGE_AT)) {
+            $modifiedColumns[':p' . $index++]  = 'last_message_at';
+        }
         if ($this->isColumnModified(ChatsTableMap::COL_CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = 'created_at';
         }
@@ -1034,6 +1089,9 @@ abstract class Chats implements ActiveRecordInterface
                         break;
                     case 'status':
                         $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
+                        break;
+                    case 'last_message_at':
+                        $stmt->bindValue($identifier, $this->last_message_at ? $this->last_message_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
@@ -1121,21 +1179,24 @@ abstract class Chats implements ActiveRecordInterface
                 return $this->getStatus();
                 break;
             case 4:
-                return $this->getCreatedAt();
+                return $this->getLastMessageAt();
                 break;
             case 5:
-                return $this->getUpdatedAt();
+                return $this->getCreatedAt();
                 break;
             case 6:
-                return $this->getDeletedAt();
+                return $this->getUpdatedAt();
                 break;
             case 7:
-                return $this->getCreatedBy();
+                return $this->getDeletedAt();
                 break;
             case 8:
-                return $this->getUpdatedBy();
+                return $this->getCreatedBy();
                 break;
             case 9:
+                return $this->getUpdatedBy();
+                break;
+            case 10:
                 return $this->getDeletedBy();
                 break;
             default:
@@ -1171,12 +1232,13 @@ abstract class Chats implements ActiveRecordInterface
             $keys[1] => $this->getUserid(),
             $keys[2] => $this->getUseridConect(),
             $keys[3] => $this->getStatus(),
-            $keys[4] => $this->getCreatedAt(),
-            $keys[5] => $this->getUpdatedAt(),
-            $keys[6] => $this->getDeletedAt(),
-            $keys[7] => $this->getCreatedBy(),
-            $keys[8] => $this->getUpdatedBy(),
-            $keys[9] => $this->getDeletedBy(),
+            $keys[4] => $this->getLastMessageAt(),
+            $keys[5] => $this->getCreatedAt(),
+            $keys[6] => $this->getUpdatedAt(),
+            $keys[7] => $this->getDeletedAt(),
+            $keys[8] => $this->getCreatedBy(),
+            $keys[9] => $this->getUpdatedBy(),
+            $keys[10] => $this->getDeletedBy(),
         );
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('Y-m-d H:i:s.u');
@@ -1188,6 +1250,10 @@ abstract class Chats implements ActiveRecordInterface
 
         if ($result[$keys[6]] instanceof \DateTimeInterface) {
             $result[$keys[6]] = $result[$keys[6]]->format('Y-m-d H:i:s.u');
+        }
+
+        if ($result[$keys[7]] instanceof \DateTimeInterface) {
+            $result[$keys[7]] = $result[$keys[7]]->format('Y-m-d H:i:s.u');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1241,21 +1307,24 @@ abstract class Chats implements ActiveRecordInterface
                 $this->setStatus($value);
                 break;
             case 4:
-                $this->setCreatedAt($value);
+                $this->setLastMessageAt($value);
                 break;
             case 5:
-                $this->setUpdatedAt($value);
+                $this->setCreatedAt($value);
                 break;
             case 6:
-                $this->setDeletedAt($value);
+                $this->setUpdatedAt($value);
                 break;
             case 7:
-                $this->setCreatedBy($value);
+                $this->setDeletedAt($value);
                 break;
             case 8:
-                $this->setUpdatedBy($value);
+                $this->setCreatedBy($value);
                 break;
             case 9:
+                $this->setUpdatedBy($value);
+                break;
+            case 10:
                 $this->setDeletedBy($value);
                 break;
         } // switch()
@@ -1297,22 +1366,25 @@ abstract class Chats implements ActiveRecordInterface
             $this->setStatus($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setCreatedAt($arr[$keys[4]]);
+            $this->setLastMessageAt($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdatedAt($arr[$keys[5]]);
+            $this->setCreatedAt($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setDeletedAt($arr[$keys[6]]);
+            $this->setUpdatedAt($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setCreatedBy($arr[$keys[7]]);
+            $this->setDeletedAt($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setUpdatedBy($arr[$keys[8]]);
+            $this->setCreatedBy($arr[$keys[8]]);
         }
         if (array_key_exists($keys[9], $arr)) {
-            $this->setDeletedBy($arr[$keys[9]]);
+            $this->setUpdatedBy($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setDeletedBy($arr[$keys[10]]);
         }
 
         return $this;
@@ -1368,6 +1440,9 @@ abstract class Chats implements ActiveRecordInterface
         }
         if ($this->isColumnModified(ChatsTableMap::COL_STATUS)) {
             $criteria->add(ChatsTableMap::COL_STATUS, $this->status);
+        }
+        if ($this->isColumnModified(ChatsTableMap::COL_LAST_MESSAGE_AT)) {
+            $criteria->add(ChatsTableMap::COL_LAST_MESSAGE_AT, $this->last_message_at);
         }
         if ($this->isColumnModified(ChatsTableMap::COL_CREATED_AT)) {
             $criteria->add(ChatsTableMap::COL_CREATED_AT, $this->created_at);
@@ -1476,6 +1551,7 @@ abstract class Chats implements ActiveRecordInterface
         $copyObj->setUserid($this->getUserid());
         $copyObj->setUseridConect($this->getUseridConect());
         $copyObj->setStatus($this->getStatus());
+        $copyObj->setLastMessageAt($this->getLastMessageAt());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
         $copyObj->setDeletedAt($this->getDeletedAt());
@@ -1521,6 +1597,7 @@ abstract class Chats implements ActiveRecordInterface
         $this->userid = null;
         $this->userid_conect = null;
         $this->status = null;
+        $this->last_message_at = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->deleted_at = null;

@@ -23,6 +23,7 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChatsQuery orderByUserid($order = Criteria::ASC) Order by the userid column
  * @method     ChildChatsQuery orderByUseridConect($order = Criteria::ASC) Order by the userid_conect column
  * @method     ChildChatsQuery orderByStatus($order = Criteria::ASC) Order by the status column
+ * @method     ChildChatsQuery orderByLastMessageAt($order = Criteria::ASC) Order by the last_message_at column
  * @method     ChildChatsQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildChatsQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  * @method     ChildChatsQuery orderByDeletedAt($order = Criteria::ASC) Order by the deleted_at column
@@ -34,6 +35,7 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChatsQuery groupByUserid() Group by the userid column
  * @method     ChildChatsQuery groupByUseridConect() Group by the userid_conect column
  * @method     ChildChatsQuery groupByStatus() Group by the status column
+ * @method     ChildChatsQuery groupByLastMessageAt() Group by the last_message_at column
  * @method     ChildChatsQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildChatsQuery groupByUpdatedAt() Group by the updated_at column
  * @method     ChildChatsQuery groupByDeletedAt() Group by the deleted_at column
@@ -56,6 +58,7 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChats|null findOneByUserid(int $userid) Return the first ChildChats filtered by the userid column
  * @method     ChildChats|null findOneByUseridConect(int $userid_conect) Return the first ChildChats filtered by the userid_conect column
  * @method     ChildChats|null findOneByStatus(int $status) Return the first ChildChats filtered by the status column
+ * @method     ChildChats|null findOneByLastMessageAt(string $last_message_at) Return the first ChildChats filtered by the last_message_at column
  * @method     ChildChats|null findOneByCreatedAt(string $created_at) Return the first ChildChats filtered by the created_at column
  * @method     ChildChats|null findOneByUpdatedAt(string $updated_at) Return the first ChildChats filtered by the updated_at column
  * @method     ChildChats|null findOneByDeletedAt(string $deleted_at) Return the first ChildChats filtered by the deleted_at column
@@ -70,6 +73,7 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChats requireOneByUserid(int $userid) Return the first ChildChats filtered by the userid column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByUseridConect(int $userid_conect) Return the first ChildChats filtered by the userid_conect column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByStatus(int $status) Return the first ChildChats filtered by the status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildChats requireOneByLastMessageAt(string $last_message_at) Return the first ChildChats filtered by the last_message_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByCreatedAt(string $created_at) Return the first ChildChats filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByUpdatedAt(string $updated_at) Return the first ChildChats filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByDeletedAt(string $deleted_at) Return the first ChildChats filtered by the deleted_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -87,6 +91,8 @@ use code\models\Map\ChatsTableMap;
  * @psalm-method ObjectCollection&\Traversable<ChildChats> findByUseridConect(int $userid_conect) Return ChildChats objects filtered by the userid_conect column
  * @method     ChildChats[]|ObjectCollection findByStatus(int $status) Return ChildChats objects filtered by the status column
  * @psalm-method ObjectCollection&\Traversable<ChildChats> findByStatus(int $status) Return ChildChats objects filtered by the status column
+ * @method     ChildChats[]|ObjectCollection findByLastMessageAt(string $last_message_at) Return ChildChats objects filtered by the last_message_at column
+ * @psalm-method ObjectCollection&\Traversable<ChildChats> findByLastMessageAt(string $last_message_at) Return ChildChats objects filtered by the last_message_at column
  * @method     ChildChats[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildChats objects filtered by the created_at column
  * @psalm-method ObjectCollection&\Traversable<ChildChats> findByCreatedAt(string $created_at) Return ChildChats objects filtered by the created_at column
  * @method     ChildChats[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildChats objects filtered by the updated_at column
@@ -198,7 +204,7 @@ abstract class ChatsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, userid, userid_conect, status, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by FROM public.chats WHERE id = :p0';
+        $sql = 'SELECT id, userid, userid_conect, status, last_message_at, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by FROM public.chats WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -450,6 +456,49 @@ abstract class ChatsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ChatsTableMap::COL_STATUS, $status, $comparison);
+    }
+
+    /**
+     * Filter the query on the last_message_at column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLastMessageAt('2011-03-14'); // WHERE last_message_at = '2011-03-14'
+     * $query->filterByLastMessageAt('now'); // WHERE last_message_at = '2011-03-14'
+     * $query->filterByLastMessageAt(array('max' => 'yesterday')); // WHERE last_message_at > '2011-03-13'
+     * </code>
+     *
+     * @param     mixed $lastMessageAt The value to use as filter.
+     *              Values can be integers (unix timestamps), DateTime objects, or strings.
+     *              Empty strings are treated as NULL.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildChatsQuery The current query, for fluid interface
+     */
+    public function filterByLastMessageAt($lastMessageAt = null, $comparison = null)
+    {
+        if (is_array($lastMessageAt)) {
+            $useMinMax = false;
+            if (isset($lastMessageAt['min'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_LAST_MESSAGE_AT, $lastMessageAt['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($lastMessageAt['max'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_LAST_MESSAGE_AT, $lastMessageAt['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ChatsTableMap::COL_LAST_MESSAGE_AT, $lastMessageAt, $comparison);
     }
 
     /**
