@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database name="default" defaultIdMethod="native" namespace="models" defaultPhpNamingMethod="underscore" schema = "public">
- <table name="users" phpName="Users" baseClass="code\user\AppUser">
+<database name="default" defaultIdMethod="native" namespace="code\models" defaultPhpNamingMethod="underscore" schema = "public">
+ <table name="chats" phpName="Chats" schema = "public">
     <column name="id" type="integer" primaryKey="true" autoIncrement="true"/>
-    <column name="name" type="varchar" size="255" required="true" />
-    <column name="surname" type="varchar" size="255" required="true" phpName="surname"/>
-    <column name="email" type="varchar" size="255" required="true" phpName="email"/>
-    <column name="description" type="varchar" size="255" required="false" phpName="description"/>
-    <column name="hash" type="varchar" size="255" required="false" phpName="hash"/>
+    <column name="user_id" type="integer" required="true" />
     <column name="status" type="integer" required="false"/>
     <column name="created_at" type="timestamp" required="false"/>
     <column name="updated_at" type="timestamp" required="false"/>
@@ -16,9 +12,10 @@
     <column name="deleted_by" type="integer" required="false"/>
   </table>
   
-  <table name="usergroups" phpName="UserGroups" schema = "public">
-    <column name="group_id" type="integer" primaryKey="true" autoIncrement="true" />
-     <column name="group_name" type="varchar" size="100" required="true" />
+  <table name="chat_messages" phpName="ChatMessages" schema = "public">
+    <column name="message_id" type="integer" primaryKey="true" autoIncrement="true" />
+    <column name="chat_id" type="integer"  required="true" />
+     <column name="message" type="clob"  required="false" />
     <column name="created_at" type="timestamp" required="false"/>
     <column name="updated_at" type="timestamp" required="false"/>
     <column name="deleted_at" type="timestamp" required="false"/>
@@ -27,29 +24,5 @@
     <column name="deleted_by" type="integer" required="false"/>
   </table>
   
-  <table name="user_permissions" phpName="UserPermissions" schema = "public">
-    <column name="pid" type="integer" primaryKey="true" autoIncrement="true" />
-    <column name="permission_name" type="varchar" size="255" required="true" />
-    <column name="permission_type" type="integer" required="false"/>
-    <column name="userid" type="integer" required="false"/>
-    <column name="created_at" type="timestamp" required="false"/>
-    <column name="updated_at" type="timestamp" required="false"/>
-    <column name="deleted_at" type="timestamp" required="false"/>
-    <column name="created_by" type="integer" required="false"/>
-    <column name="updated_by" type="integer" required="false"/>
-    <column name="deleted_by" type="integer" required="false"/>
-  </table>
-  <table name="group_permissions" phpName="GroupPermissions" schema = "public">
-    <column name="pid" type="integer" primaryKey="true" autoIncrement="true" />
-    <column name="permission_name" type="varchar" size="255" required="true" />
-    <column name="permission_type" type="integer" required="false"/>
-    <column name="userid" type="integer" required="false"/>
-    <column name="created_at" type="timestamp" required="false"/>
-    <column name="updated_at" type="timestamp" required="false"/>
-    <column name="deleted_at" type="timestamp" required="false"/>
-    <column name="created_by" type="integer" required="false"/>
-    <column name="updated_by" type="integer" required="false"/>
-    <column name="deleted_by" type="integer" required="false"/>
-  </table>
 </database>
 
