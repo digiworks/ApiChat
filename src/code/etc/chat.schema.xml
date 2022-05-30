@@ -2,7 +2,8 @@
 <database name="default" defaultIdMethod="native" namespace="code\models" defaultPhpNamingMethod="underscore" schema = "public">
  <table name="chats" phpName="Chats" schema = "public">
     <column name="id" type="integer" primaryKey="true" autoIncrement="true"/>
-    <column name="user_id" type="integer" required="true" />
+    <column name="userid" type="integer" required="true" />
+    <column name="userid_conect" type="integer" required="true" />
     <column name="status" type="integer" required="false"/>
     <column name="created_at" type="timestamp" required="false"/>
     <column name="updated_at" type="timestamp" required="false"/>
@@ -10,6 +11,9 @@
     <column name="created_by" type="integer" required="false"/>
     <column name="updated_by" type="integer" required="false"/>
     <column name="deleted_by" type="integer" required="false"/>
+    <index name="idx_userid_conect">
+        <index-column name="userid_conect" />
+    </index>
   </table>
   
   <table name="chat_messages" phpName="ChatMessages" schema = "public">

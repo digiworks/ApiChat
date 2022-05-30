@@ -20,7 +20,8 @@ use code\models\Map\ChatsTableMap;
  *
  *
  * @method     ChildChatsQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildChatsQuery orderByUserId($order = Criteria::ASC) Order by the user_id column
+ * @method     ChildChatsQuery orderByUserid($order = Criteria::ASC) Order by the userid column
+ * @method     ChildChatsQuery orderByUseridConect($order = Criteria::ASC) Order by the userid_conect column
  * @method     ChildChatsQuery orderByStatus($order = Criteria::ASC) Order by the status column
  * @method     ChildChatsQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method     ChildChatsQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
@@ -30,7 +31,8 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChatsQuery orderByDeletedBy($order = Criteria::ASC) Order by the deleted_by column
  *
  * @method     ChildChatsQuery groupById() Group by the id column
- * @method     ChildChatsQuery groupByUserId() Group by the user_id column
+ * @method     ChildChatsQuery groupByUserid() Group by the userid column
+ * @method     ChildChatsQuery groupByUseridConect() Group by the userid_conect column
  * @method     ChildChatsQuery groupByStatus() Group by the status column
  * @method     ChildChatsQuery groupByCreatedAt() Group by the created_at column
  * @method     ChildChatsQuery groupByUpdatedAt() Group by the updated_at column
@@ -51,7 +53,8 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChats findOneOrCreate(ConnectionInterface $con = null) Return the first ChildChats matching the query, or a new ChildChats object populated from the query conditions when no match is found
  *
  * @method     ChildChats|null findOneById(int $id) Return the first ChildChats filtered by the id column
- * @method     ChildChats|null findOneByUserId(int $user_id) Return the first ChildChats filtered by the user_id column
+ * @method     ChildChats|null findOneByUserid(int $userid) Return the first ChildChats filtered by the userid column
+ * @method     ChildChats|null findOneByUseridConect(int $userid_conect) Return the first ChildChats filtered by the userid_conect column
  * @method     ChildChats|null findOneByStatus(int $status) Return the first ChildChats filtered by the status column
  * @method     ChildChats|null findOneByCreatedAt(string $created_at) Return the first ChildChats filtered by the created_at column
  * @method     ChildChats|null findOneByUpdatedAt(string $updated_at) Return the first ChildChats filtered by the updated_at column
@@ -64,7 +67,8 @@ use code\models\Map\ChatsTableMap;
  * @method     ChildChats requireOne(ConnectionInterface $con = null) Return the first ChildChats matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildChats requireOneById(int $id) Return the first ChildChats filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildChats requireOneByUserId(int $user_id) Return the first ChildChats filtered by the user_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildChats requireOneByUserid(int $userid) Return the first ChildChats filtered by the userid column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildChats requireOneByUseridConect(int $userid_conect) Return the first ChildChats filtered by the userid_conect column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByStatus(int $status) Return the first ChildChats filtered by the status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByCreatedAt(string $created_at) Return the first ChildChats filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildChats requireOneByUpdatedAt(string $updated_at) Return the first ChildChats filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -77,8 +81,10 @@ use code\models\Map\ChatsTableMap;
  * @psalm-method ObjectCollection&\Traversable<ChildChats> find(ConnectionInterface $con = null) Return ChildChats objects based on current ModelCriteria
  * @method     ChildChats[]|ObjectCollection findById(int $id) Return ChildChats objects filtered by the id column
  * @psalm-method ObjectCollection&\Traversable<ChildChats> findById(int $id) Return ChildChats objects filtered by the id column
- * @method     ChildChats[]|ObjectCollection findByUserId(int $user_id) Return ChildChats objects filtered by the user_id column
- * @psalm-method ObjectCollection&\Traversable<ChildChats> findByUserId(int $user_id) Return ChildChats objects filtered by the user_id column
+ * @method     ChildChats[]|ObjectCollection findByUserid(int $userid) Return ChildChats objects filtered by the userid column
+ * @psalm-method ObjectCollection&\Traversable<ChildChats> findByUserid(int $userid) Return ChildChats objects filtered by the userid column
+ * @method     ChildChats[]|ObjectCollection findByUseridConect(int $userid_conect) Return ChildChats objects filtered by the userid_conect column
+ * @psalm-method ObjectCollection&\Traversable<ChildChats> findByUseridConect(int $userid_conect) Return ChildChats objects filtered by the userid_conect column
  * @method     ChildChats[]|ObjectCollection findByStatus(int $status) Return ChildChats objects filtered by the status column
  * @psalm-method ObjectCollection&\Traversable<ChildChats> findByStatus(int $status) Return ChildChats objects filtered by the status column
  * @method     ChildChats[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildChats objects filtered by the created_at column
@@ -192,7 +198,7 @@ abstract class ChatsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, user_id, status, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by FROM public.chats WHERE id = :p0';
+        $sql = 'SELECT id, userid, userid_conect, status, created_at, updated_at, deleted_at, created_by, updated_by, deleted_by FROM public.chats WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -324,16 +330,16 @@ abstract class ChatsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the user_id column
+     * Filter the query on the userid column
      *
      * Example usage:
      * <code>
-     * $query->filterByUserId(1234); // WHERE user_id = 1234
-     * $query->filterByUserId(array(12, 34)); // WHERE user_id IN (12, 34)
-     * $query->filterByUserId(array('min' => 12)); // WHERE user_id > 12
+     * $query->filterByUserid(1234); // WHERE userid = 1234
+     * $query->filterByUserid(array(12, 34)); // WHERE userid IN (12, 34)
+     * $query->filterByUserid(array('min' => 12)); // WHERE userid > 12
      * </code>
      *
-     * @param     mixed $userId The value to use as filter.
+     * @param     mixed $userid The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -341,16 +347,16 @@ abstract class ChatsQuery extends ModelCriteria
      *
      * @return $this|ChildChatsQuery The current query, for fluid interface
      */
-    public function filterByUserId($userId = null, $comparison = null)
+    public function filterByUserid($userid = null, $comparison = null)
     {
-        if (is_array($userId)) {
+        if (is_array($userid)) {
             $useMinMax = false;
-            if (isset($userId['min'])) {
-                $this->addUsingAlias(ChatsTableMap::COL_USER_ID, $userId['min'], Criteria::GREATER_EQUAL);
+            if (isset($userid['min'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_USERID, $userid['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($userId['max'])) {
-                $this->addUsingAlias(ChatsTableMap::COL_USER_ID, $userId['max'], Criteria::LESS_EQUAL);
+            if (isset($userid['max'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_USERID, $userid['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -361,7 +367,48 @@ abstract class ChatsQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(ChatsTableMap::COL_USER_ID, $userId, $comparison);
+        return $this->addUsingAlias(ChatsTableMap::COL_USERID, $userid, $comparison);
+    }
+
+    /**
+     * Filter the query on the userid_conect column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUseridConect(1234); // WHERE userid_conect = 1234
+     * $query->filterByUseridConect(array(12, 34)); // WHERE userid_conect IN (12, 34)
+     * $query->filterByUseridConect(array('min' => 12)); // WHERE userid_conect > 12
+     * </code>
+     *
+     * @param     mixed $useridConect The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildChatsQuery The current query, for fluid interface
+     */
+    public function filterByUseridConect($useridConect = null, $comparison = null)
+    {
+        if (is_array($useridConect)) {
+            $useMinMax = false;
+            if (isset($useridConect['min'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_USERID_CONECT, $useridConect['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($useridConect['max'])) {
+                $this->addUsingAlias(ChatsTableMap::COL_USERID_CONECT, $useridConect['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ChatsTableMap::COL_USERID_CONECT, $useridConect, $comparison);
     }
 
     /**

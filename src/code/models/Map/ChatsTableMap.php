@@ -58,7 +58,7 @@ class ChatsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 10;
 
     /**
      * The number of lazy-loaded columns
@@ -68,7 +68,7 @@ class ChatsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 10;
 
     /**
      * the column name for the id field
@@ -76,9 +76,14 @@ class ChatsTableMap extends TableMap
     const COL_ID = 'public.chats.id';
 
     /**
-     * the column name for the user_id field
+     * the column name for the userid field
      */
-    const COL_USER_ID = 'public.chats.user_id';
+    const COL_USERID = 'public.chats.userid';
+
+    /**
+     * the column name for the userid_conect field
+     */
+    const COL_USERID_CONECT = 'public.chats.userid_conect';
 
     /**
      * the column name for the status field
@@ -127,11 +132,11 @@ class ChatsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'UserId', 'Status', 'CreatedAt', 'UpdatedAt', 'DeletedAt', 'CreatedBy', 'UpdatedBy', 'DeletedBy', ),
-        self::TYPE_CAMELNAME     => array('id', 'userId', 'status', 'createdAt', 'updatedAt', 'deletedAt', 'createdBy', 'updatedBy', 'deletedBy', ),
-        self::TYPE_COLNAME       => array(ChatsTableMap::COL_ID, ChatsTableMap::COL_USER_ID, ChatsTableMap::COL_STATUS, ChatsTableMap::COL_CREATED_AT, ChatsTableMap::COL_UPDATED_AT, ChatsTableMap::COL_DELETED_AT, ChatsTableMap::COL_CREATED_BY, ChatsTableMap::COL_UPDATED_BY, ChatsTableMap::COL_DELETED_BY, ),
-        self::TYPE_FIELDNAME     => array('id', 'user_id', 'status', 'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('Id', 'Userid', 'UseridConect', 'Status', 'CreatedAt', 'UpdatedAt', 'DeletedAt', 'CreatedBy', 'UpdatedBy', 'DeletedBy', ),
+        self::TYPE_CAMELNAME     => array('id', 'userid', 'useridConect', 'status', 'createdAt', 'updatedAt', 'deletedAt', 'createdBy', 'updatedBy', 'deletedBy', ),
+        self::TYPE_COLNAME       => array(ChatsTableMap::COL_ID, ChatsTableMap::COL_USERID, ChatsTableMap::COL_USERID_CONECT, ChatsTableMap::COL_STATUS, ChatsTableMap::COL_CREATED_AT, ChatsTableMap::COL_UPDATED_AT, ChatsTableMap::COL_DELETED_AT, ChatsTableMap::COL_CREATED_BY, ChatsTableMap::COL_UPDATED_BY, ChatsTableMap::COL_DELETED_BY, ),
+        self::TYPE_FIELDNAME     => array('id', 'userid', 'userid_conect', 'status', 'created_at', 'updated_at', 'deleted_at', 'created_by', 'updated_by', 'deleted_by', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -141,11 +146,11 @@ class ChatsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'UserId' => 1, 'Status' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, 'DeletedAt' => 5, 'CreatedBy' => 6, 'UpdatedBy' => 7, 'DeletedBy' => 8, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'userId' => 1, 'status' => 2, 'createdAt' => 3, 'updatedAt' => 4, 'deletedAt' => 5, 'createdBy' => 6, 'updatedBy' => 7, 'deletedBy' => 8, ),
-        self::TYPE_COLNAME       => array(ChatsTableMap::COL_ID => 0, ChatsTableMap::COL_USER_ID => 1, ChatsTableMap::COL_STATUS => 2, ChatsTableMap::COL_CREATED_AT => 3, ChatsTableMap::COL_UPDATED_AT => 4, ChatsTableMap::COL_DELETED_AT => 5, ChatsTableMap::COL_CREATED_BY => 6, ChatsTableMap::COL_UPDATED_BY => 7, ChatsTableMap::COL_DELETED_BY => 8, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'user_id' => 1, 'status' => 2, 'created_at' => 3, 'updated_at' => 4, 'deleted_at' => 5, 'created_by' => 6, 'updated_by' => 7, 'deleted_by' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Userid' => 1, 'UseridConect' => 2, 'Status' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, 'DeletedAt' => 6, 'CreatedBy' => 7, 'UpdatedBy' => 8, 'DeletedBy' => 9, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'userid' => 1, 'useridConect' => 2, 'status' => 3, 'createdAt' => 4, 'updatedAt' => 5, 'deletedAt' => 6, 'createdBy' => 7, 'updatedBy' => 8, 'deletedBy' => 9, ),
+        self::TYPE_COLNAME       => array(ChatsTableMap::COL_ID => 0, ChatsTableMap::COL_USERID => 1, ChatsTableMap::COL_USERID_CONECT => 2, ChatsTableMap::COL_STATUS => 3, ChatsTableMap::COL_CREATED_AT => 4, ChatsTableMap::COL_UPDATED_AT => 5, ChatsTableMap::COL_DELETED_AT => 6, ChatsTableMap::COL_CREATED_BY => 7, ChatsTableMap::COL_UPDATED_BY => 8, ChatsTableMap::COL_DELETED_BY => 9, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'userid' => 1, 'userid_conect' => 2, 'status' => 3, 'created_at' => 4, 'updated_at' => 5, 'deleted_at' => 6, 'created_by' => 7, 'updated_by' => 8, 'deleted_by' => 9, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -161,14 +166,21 @@ class ChatsTableMap extends TableMap
         'ChatsTableMap::COL_ID' => 'ID',
         'COL_ID' => 'ID',
         'public.chats.id' => 'ID',
-        'UserId' => 'USER_ID',
-        'Chats.UserId' => 'USER_ID',
-        'userId' => 'USER_ID',
-        'chats.userId' => 'USER_ID',
-        'ChatsTableMap::COL_USER_ID' => 'USER_ID',
-        'COL_USER_ID' => 'USER_ID',
-        'user_id' => 'USER_ID',
-        'public.chats.user_id' => 'USER_ID',
+        'Userid' => 'USERID',
+        'Chats.Userid' => 'USERID',
+        'userid' => 'USERID',
+        'chats.userid' => 'USERID',
+        'ChatsTableMap::COL_USERID' => 'USERID',
+        'COL_USERID' => 'USERID',
+        'public.chats.userid' => 'USERID',
+        'UseridConect' => 'USERID_CONECT',
+        'Chats.UseridConect' => 'USERID_CONECT',
+        'useridConect' => 'USERID_CONECT',
+        'chats.useridConect' => 'USERID_CONECT',
+        'ChatsTableMap::COL_USERID_CONECT' => 'USERID_CONECT',
+        'COL_USERID_CONECT' => 'USERID_CONECT',
+        'userid_conect' => 'USERID_CONECT',
+        'public.chats.userid_conect' => 'USERID_CONECT',
         'Status' => 'STATUS',
         'Chats.Status' => 'STATUS',
         'status' => 'STATUS',
@@ -245,7 +257,8 @@ class ChatsTableMap extends TableMap
         $this->setPrimaryKeyMethodInfo('public.chats_id_seq');
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('user_id', 'UserId', 'INTEGER', true, null, null);
+        $this->addColumn('userid', 'Userid', 'INTEGER', true, null, null);
+        $this->addColumn('userid_conect', 'UseridConect', 'INTEGER', true, null, null);
         $this->addColumn('status', 'Status', 'INTEGER', false, null, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
@@ -404,7 +417,8 @@ class ChatsTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(ChatsTableMap::COL_ID);
-            $criteria->addSelectColumn(ChatsTableMap::COL_USER_ID);
+            $criteria->addSelectColumn(ChatsTableMap::COL_USERID);
+            $criteria->addSelectColumn(ChatsTableMap::COL_USERID_CONECT);
             $criteria->addSelectColumn(ChatsTableMap::COL_STATUS);
             $criteria->addSelectColumn(ChatsTableMap::COL_CREATED_AT);
             $criteria->addSelectColumn(ChatsTableMap::COL_UPDATED_AT);
@@ -414,7 +428,8 @@ class ChatsTableMap extends TableMap
             $criteria->addSelectColumn(ChatsTableMap::COL_DELETED_BY);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.user_id');
+            $criteria->addSelectColumn($alias . '.userid');
+            $criteria->addSelectColumn($alias . '.userid_conect');
             $criteria->addSelectColumn($alias . '.status');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
@@ -440,7 +455,8 @@ class ChatsTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->removeSelectColumn(ChatsTableMap::COL_ID);
-            $criteria->removeSelectColumn(ChatsTableMap::COL_USER_ID);
+            $criteria->removeSelectColumn(ChatsTableMap::COL_USERID);
+            $criteria->removeSelectColumn(ChatsTableMap::COL_USERID_CONECT);
             $criteria->removeSelectColumn(ChatsTableMap::COL_STATUS);
             $criteria->removeSelectColumn(ChatsTableMap::COL_CREATED_AT);
             $criteria->removeSelectColumn(ChatsTableMap::COL_UPDATED_AT);
@@ -450,7 +466,8 @@ class ChatsTableMap extends TableMap
             $criteria->removeSelectColumn(ChatsTableMap::COL_DELETED_BY);
         } else {
             $criteria->removeSelectColumn($alias . '.id');
-            $criteria->removeSelectColumn($alias . '.user_id');
+            $criteria->removeSelectColumn($alias . '.userid');
+            $criteria->removeSelectColumn($alias . '.userid_conect');
             $criteria->removeSelectColumn($alias . '.status');
             $criteria->removeSelectColumn($alias . '.created_at');
             $criteria->removeSelectColumn($alias . '.updated_at');

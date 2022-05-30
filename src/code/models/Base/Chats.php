@@ -69,11 +69,18 @@ abstract class Chats implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the user_id field.
+     * The value for the userid field.
      *
      * @var        int
      */
-    protected $user_id;
+    protected $userid;
+
+    /**
+     * The value for the userid_conect field.
+     *
+     * @var        int
+     */
+    protected $userid_conect;
 
     /**
      * The value for the status field.
@@ -367,13 +374,23 @@ abstract class Chats implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user_id] column value.
+     * Get the [userid] column value.
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserid()
     {
-        return $this->user_id;
+        return $this->userid;
+    }
+
+    /**
+     * Get the [userid_conect] column value.
+     *
+     * @return int
+     */
+    public function getUseridConect()
+    {
+        return $this->userid_conect;
     }
 
     /**
@@ -503,24 +520,44 @@ abstract class Chats implements ActiveRecordInterface
     } // setId()
 
     /**
-     * Set the value of [user_id] column.
+     * Set the value of [userid] column.
      *
      * @param int $v New value
      * @return $this|\code\models\Chats The current object (for fluent API support)
      */
-    public function setUserId($v)
+    public function setUserid($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->user_id !== $v) {
-            $this->user_id = $v;
-            $this->modifiedColumns[ChatsTableMap::COL_USER_ID] = true;
+        if ($this->userid !== $v) {
+            $this->userid = $v;
+            $this->modifiedColumns[ChatsTableMap::COL_USERID] = true;
         }
 
         return $this;
-    } // setUserId()
+    } // setUserid()
+
+    /**
+     * Set the value of [userid_conect] column.
+     *
+     * @param int $v New value
+     * @return $this|\code\models\Chats The current object (for fluent API support)
+     */
+    public function setUseridConect($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->userid_conect !== $v) {
+            $this->userid_conect = $v;
+            $this->modifiedColumns[ChatsTableMap::COL_USERID_CONECT] = true;
+        }
+
+        return $this;
+    } // setUseridConect()
 
     /**
      * Set the value of [status] column.
@@ -701,28 +738,31 @@ abstract class Chats implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ChatsTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ChatsTableMap::translateFieldName('UserId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ChatsTableMap::translateFieldName('Userid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->userid = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ChatsTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ChatsTableMap::translateFieldName('UseridConect', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->userid_conect = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ChatsTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ChatsTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ChatsTableMap::translateFieldName('CreatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->created_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ChatsTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ChatsTableMap::translateFieldName('UpdatedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ChatsTableMap::translateFieldName('DeletedAt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ChatsTableMap::translateFieldName('DeletedAt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->deleted_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ChatsTableMap::translateFieldName('CreatedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ChatsTableMap::translateFieldName('CreatedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->created_by = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ChatsTableMap::translateFieldName('UpdatedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ChatsTableMap::translateFieldName('UpdatedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->updated_by = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ChatsTableMap::translateFieldName('DeletedBy', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : ChatsTableMap::translateFieldName('DeletedBy', TableMap::TYPE_PHPNAME, $indexType)];
             $this->deleted_by = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -732,7 +772,7 @@ abstract class Chats implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = ChatsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 10; // 10 = ChatsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\code\\models\\Chats'), 0, $e);
@@ -945,8 +985,11 @@ abstract class Chats implements ActiveRecordInterface
         if ($this->isColumnModified(ChatsTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(ChatsTableMap::COL_USER_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id';
+        if ($this->isColumnModified(ChatsTableMap::COL_USERID)) {
+            $modifiedColumns[':p' . $index++]  = 'userid';
+        }
+        if ($this->isColumnModified(ChatsTableMap::COL_USERID_CONECT)) {
+            $modifiedColumns[':p' . $index++]  = 'userid_conect';
         }
         if ($this->isColumnModified(ChatsTableMap::COL_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'status';
@@ -983,8 +1026,11 @@ abstract class Chats implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'user_id':
-                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
+                    case 'userid':
+                        $stmt->bindValue($identifier, $this->userid, PDO::PARAM_INT);
+                        break;
+                    case 'userid_conect':
+                        $stmt->bindValue($identifier, $this->userid_conect, PDO::PARAM_INT);
                         break;
                     case 'status':
                         $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
@@ -1066,27 +1112,30 @@ abstract class Chats implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUserId();
+                return $this->getUserid();
                 break;
             case 2:
-                return $this->getStatus();
+                return $this->getUseridConect();
                 break;
             case 3:
-                return $this->getCreatedAt();
+                return $this->getStatus();
                 break;
             case 4:
-                return $this->getUpdatedAt();
+                return $this->getCreatedAt();
                 break;
             case 5:
-                return $this->getDeletedAt();
+                return $this->getUpdatedAt();
                 break;
             case 6:
-                return $this->getCreatedBy();
+                return $this->getDeletedAt();
                 break;
             case 7:
-                return $this->getUpdatedBy();
+                return $this->getCreatedBy();
                 break;
             case 8:
+                return $this->getUpdatedBy();
+                break;
+            case 9:
                 return $this->getDeletedBy();
                 break;
             default:
@@ -1119,25 +1168,26 @@ abstract class Chats implements ActiveRecordInterface
         $keys = ChatsTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUserId(),
-            $keys[2] => $this->getStatus(),
-            $keys[3] => $this->getCreatedAt(),
-            $keys[4] => $this->getUpdatedAt(),
-            $keys[5] => $this->getDeletedAt(),
-            $keys[6] => $this->getCreatedBy(),
-            $keys[7] => $this->getUpdatedBy(),
-            $keys[8] => $this->getDeletedBy(),
+            $keys[1] => $this->getUserid(),
+            $keys[2] => $this->getUseridConect(),
+            $keys[3] => $this->getStatus(),
+            $keys[4] => $this->getCreatedAt(),
+            $keys[5] => $this->getUpdatedAt(),
+            $keys[6] => $this->getDeletedAt(),
+            $keys[7] => $this->getCreatedBy(),
+            $keys[8] => $this->getUpdatedBy(),
+            $keys[9] => $this->getDeletedBy(),
         );
-        if ($result[$keys[3]] instanceof \DateTimeInterface) {
-            $result[$keys[3]] = $result[$keys[3]]->format('Y-m-d H:i:s.u');
-        }
-
         if ($result[$keys[4]] instanceof \DateTimeInterface) {
             $result[$keys[4]] = $result[$keys[4]]->format('Y-m-d H:i:s.u');
         }
 
         if ($result[$keys[5]] instanceof \DateTimeInterface) {
             $result[$keys[5]] = $result[$keys[5]]->format('Y-m-d H:i:s.u');
+        }
+
+        if ($result[$keys[6]] instanceof \DateTimeInterface) {
+            $result[$keys[6]] = $result[$keys[6]]->format('Y-m-d H:i:s.u');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1182,27 +1232,30 @@ abstract class Chats implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUserId($value);
+                $this->setUserid($value);
                 break;
             case 2:
-                $this->setStatus($value);
+                $this->setUseridConect($value);
                 break;
             case 3:
-                $this->setCreatedAt($value);
+                $this->setStatus($value);
                 break;
             case 4:
-                $this->setUpdatedAt($value);
+                $this->setCreatedAt($value);
                 break;
             case 5:
-                $this->setDeletedAt($value);
+                $this->setUpdatedAt($value);
                 break;
             case 6:
-                $this->setCreatedBy($value);
+                $this->setDeletedAt($value);
                 break;
             case 7:
-                $this->setUpdatedBy($value);
+                $this->setCreatedBy($value);
                 break;
             case 8:
+                $this->setUpdatedBy($value);
+                break;
+            case 9:
                 $this->setDeletedBy($value);
                 break;
         } // switch()
@@ -1235,28 +1288,31 @@ abstract class Chats implements ActiveRecordInterface
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setUserId($arr[$keys[1]]);
+            $this->setUserid($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setStatus($arr[$keys[2]]);
+            $this->setUseridConect($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setCreatedAt($arr[$keys[3]]);
+            $this->setStatus($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdatedAt($arr[$keys[4]]);
+            $this->setCreatedAt($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setDeletedAt($arr[$keys[5]]);
+            $this->setUpdatedAt($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setCreatedBy($arr[$keys[6]]);
+            $this->setDeletedAt($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdatedBy($arr[$keys[7]]);
+            $this->setCreatedBy($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setDeletedBy($arr[$keys[8]]);
+            $this->setUpdatedBy($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setDeletedBy($arr[$keys[9]]);
         }
 
         return $this;
@@ -1304,8 +1360,11 @@ abstract class Chats implements ActiveRecordInterface
         if ($this->isColumnModified(ChatsTableMap::COL_ID)) {
             $criteria->add(ChatsTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(ChatsTableMap::COL_USER_ID)) {
-            $criteria->add(ChatsTableMap::COL_USER_ID, $this->user_id);
+        if ($this->isColumnModified(ChatsTableMap::COL_USERID)) {
+            $criteria->add(ChatsTableMap::COL_USERID, $this->userid);
+        }
+        if ($this->isColumnModified(ChatsTableMap::COL_USERID_CONECT)) {
+            $criteria->add(ChatsTableMap::COL_USERID_CONECT, $this->userid_conect);
         }
         if ($this->isColumnModified(ChatsTableMap::COL_STATUS)) {
             $criteria->add(ChatsTableMap::COL_STATUS, $this->status);
@@ -1414,7 +1473,8 @@ abstract class Chats implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUserId($this->getUserId());
+        $copyObj->setUserid($this->getUserid());
+        $copyObj->setUseridConect($this->getUseridConect());
         $copyObj->setStatus($this->getStatus());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
@@ -1458,7 +1518,8 @@ abstract class Chats implements ActiveRecordInterface
     public function clear()
     {
         $this->id = null;
-        $this->user_id = null;
+        $this->userid = null;
+        $this->userid_conect = null;
         $this->status = null;
         $this->created_at = null;
         $this->updated_at = null;
