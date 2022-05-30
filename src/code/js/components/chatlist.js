@@ -1,7 +1,7 @@
 
 
 function getLatestChats(props, count, callback) {
-    BaseApp.get(
+    baseApp.get(
         `/api/chat/latest/${count}/`
     )
     .then((response) => {
@@ -18,7 +18,7 @@ function getLatestChats(props, count, callback) {
 
 
 function getChatsBefore(props, before, count, callback) {
-    BaseApp.put(
+    baseApp.put(
         `/api/chat/latest/${count}/`,
         { before },
     )
