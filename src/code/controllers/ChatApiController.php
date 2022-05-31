@@ -2,8 +2,12 @@
 
 namespace code\controllers;
 
-use code\apichat\ApiChat;
+use code\ApiChat;
 use code\applications\ApiAppFactory;
+use code\models\ChatsQuery;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 
 
 class ChatApiController extends AppController{
@@ -17,7 +21,7 @@ class ChatApiController extends AppController{
         $this->response = $response;
         $this->request = $request;
         $count = $args['count'];
-        $query = new \code\models\ChatsQuery();
+        $query = new ChatsQuery();
         $data = $query->listLast(1, $count);
         $totalCount = count(data);
         $result = [
