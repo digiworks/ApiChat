@@ -2,7 +2,7 @@
 
 function getLatestChats(props, count, callback) {
     baseApp.get(
-        `/api/chat/latest/${count}/`
+        `/api/chat/latest/${count}`
     )
     .then((response) => {
         // Run hook in Axios on GET requests
@@ -19,7 +19,7 @@ function getLatestChats(props, count, callback) {
 
 function getChatsBefore(props, before, count, callback) {
     baseApp.put(
-        `/api/chat/latest/${count}/`,
+        `/api/chat/latest/${count}`,
         { before },
     )
 
