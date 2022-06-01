@@ -107,12 +107,12 @@ function IndexPage(props) {
     
     return (
             <div>
-		    <Backdrop
-		        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-		        open={waiting}
-		    >
-		        <CircularProgress color="inherit" />
-		    </Backdrop>
+                <Backdrop
+                    sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open={waiting}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
                 <Float>
                     <span> {baseApp.translations().t("save", "dashboard")} </span>
                 </Float >
@@ -136,7 +136,7 @@ function IndexPage(props) {
                             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                         </Typography>
                         <DataGridRest
-				restUrl = {"https://192.168.178.106" + "/api/user/paginate"}
+				restUrl = {props.pageParams.userApiGateway + "/api/user/paginate"}
 				headers = {hd}
 				keyColumn = "Id"
 				columns = {columns}

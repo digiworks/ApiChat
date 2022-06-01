@@ -13,9 +13,16 @@ use Psr\Http\Message\ServerRequestInterface;
 class ChatApiController extends AppController{
 
     public function __construct() {
-        $this->setComponent(ApiAppFactory::getApp()->getComponent(ApiChat::getComponenteId()));
+        $this->setComponent(ApiAppFactory::getApp()->getComponent(ApiChat::getName()));
     }
     
+    /**
+     * 
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function latestChats(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 
         $this->response = $response;
@@ -23,7 +30,7 @@ class ChatApiController extends AppController{
         $count = $args['count'];
         $query = new ChatsQuery();
         $data = $query->listLast(1, $count);
-        $totalCount = count(data);
+        $totalCount = $query->getCount();
         $result = [
             'data' => $data,
             'totalCount' => $totalCount

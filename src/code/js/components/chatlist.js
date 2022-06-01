@@ -3,17 +3,8 @@
 function getLatestChats(props, count, callback) {
     baseApp.get(
         `/api/chat/latest/${count}`
-    )
-    .then((response) => {
-        // Run hook in Axios on GET requests
-        props.onGetChats && props.onGetChats(response.data);
-
-        callback && callback(response.data);
-    })
+    );
     
-    .catch((error) => {
-        console.log("Fetch Chats Error", error);
-    });
 }
 
 
@@ -21,19 +12,97 @@ function getChatsBefore(props, before, count, callback) {
     baseApp.put(
         `/api/chat/latest/${count}`,
         { before },
-    )
+    );
 
-    .then((response) => {
-        // Run hook in Axios on GET requests
-        props.onGetChats && props.onGetChats(response.data);
-
-        callback && callback(response.data);
-    })
-    
-    .catch((error) => {
-        console.log('Fetch Chats Before Error', error);
-    });
 }
+
+
+const ChatCard = props => {
+    const { chat } = props;
+    const { activeChat, setActiveChat } = React.useState(0);
+
+    if (_.isEmpty(chat) || props.loading) return <Loading />;
+    
+
+    const extraStyle = activeChat === chat.id ? styles.activeChat : {};
+    const otherPerson = chat.people.find(person => conn.userName !== person.person.username);
+    const title = chat.is_direct_chat && otherPerson ? otherPerson.person.username : chat.title;
+    
+    let lastMessage = htmlToFormattedText(chat.last_message.text);
+    if (!lastMessage) {
+        lastMessage = chat.last_message.attachments.length > 0 ?
+        `${chat.last_message.attachments.length} image${chat.last_message.attachments.length > 1 ? "s" : ""}` :
+        "Say hello!";
+    }
+
+    function didReadLastMessage(chat) {
+        let didReadLastMessage = true;
+       
+        return didReadLastMessage;
+    }
+
+    function daySinceSent(date) {
+        if (!date) return "";
+        return getDateTime(date, conn.offset).toString().substr(4, 6);
+    }
+
+    return (
+        <Boop triggers={["onClick", "onMouseEnter"]} x={3} timing={60} width={"-webkit-fill-available"}>
+            <div 
+                onClick={() => setActiveChat(chat.id)}
+                style={{ ...styles.chatContainer, ...extraStyle }}
+                className={`ce-chat-card ${activeChat === chat.id && "ce-active-chat-card"}`}
+            >
+                <div 
+                    style={ styles.titleText }
+                    className = "ce-chat-title-text"
+                    id={`ce-chat-card-title-${title}`}
+                >
+                    <div 
+                        style={{ 
+                            width: !didReadLastMessage(chat) && "calc(100% - 18px)", 
+                            overflowX: "hidden", 
+                            display: "inline-block" 
+                        }}
+                    >
+                        { title }
+                    </div>
+                    
+                    {
+                        !didReadLastMessage(chat) &&
+                        <div 
+                            className="ce-chat-unread-dot"
+                            style={{ 
+                                marginTop: "5px",
+                                width: "12px",
+                                height: "12px",
+                                borderRadius: "6px",
+                                backgroundColor: "#1890ff",
+                                float: "right", 
+                                display: "inline-block"
+                            }} 
+                        />
+                    }
+                </div>
+
+                <div style={{ width: "100%" }} className = "ce-chat-subtitle">
+                    <div style={styles.messageText} className ="ce-chat-subtitle-text ce-chat-subtitle-message">
+                        { lastMessage }
+                    </div>
+
+                    <div 
+                        className="ce-chat-subtitle-text ce-chat-subtitle-date"
+                        style={{ ...styles.messageText, ...{ textAlign: "right", width: "25%" } }}
+                    >
+                        { daySinceSent(chat.last_message.created) }
+                    </div>
+                </div>
+            </div>
+        </Boop>
+    )
+};
+
+
 
 const ChatLoader = props => {
     const useOnScreen = (ref) => {
@@ -62,8 +131,8 @@ const ChatLoader = props => {
     
     return (
         <div ref={ref}>
-            <div style={{ textAlign: 'center', backgroundColor: '#e2e2e2', margin: '4px', borderRadius: '4px' }}>
-                <LoadingOutlined style={{ fontSize: '21px', padding: '24px' }} />
+            <div style={{ textAlign: "center", backgroundColor: "#e2e2e2", margin: "4px", borderRadius: "4px" }}>
+                <LoadingOutlined style={{ fontSize: "21px", padding: "24px" }} />
             </div>
         </div>
     )
@@ -151,12 +220,7 @@ const ChatList = props => {
     return (
         <div style={styles.chatListContainer} className = "ce-chat-list">
             <div style={styles.chatsContainer} className = "ce-chats-container">
-                { 
-                    props.renderNewChatForm ? 
-                    props.renderNewChatForm(conn) : 
-                    <NewChatForm onClose={props.onClose ? () => props.onClose() : undefined} /> 
-                }
-
+                
                 { renderChats(chatList) } 
 
                 { 
@@ -187,6 +251,30 @@ const styles={
         height: "100%",
         backgroundColor: "white", 
         borderRadius: "0px 0px 24px 24px"
+    },
+    chatContainer: { 
+        padding: "16px", 
+        paddingBottom: "12px",
+        cursor: "pointer"
+    },
+    titleText: { 
+        fontWeight: "500",
+        paddingBottom: "4px", 
+        whiteSpace: "nowrap", 
+        overflow: "hidden" 
+    },
+    messageText: {
+        width: "75%",
+        color: "rgba(153, 153, 153, 1)", 
+        fontSize: "14px", 
+        whiteSpace: "nowrap", 
+        overflow: "hidden",
+        display: "inline-block"
+    },
+    activeChat: {
+        backgroundColor: "#d9d9d9",
+        border: "0px solid white",
+        borderRadius: "12px"
     }
 };
 

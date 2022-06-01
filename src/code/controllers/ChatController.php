@@ -24,6 +24,7 @@ class ChatController extends AppController {
     public function home(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 
         try {
+            $this->addJsParam("userApiGateway", $this->getComponent()->getUsersApiGateway());
             $currentView = 'js/views/dashboard.js';
             $this->setRequest($request)->setResponse($response)->setCurrentView($currentView)->buildViewResponse()->render();
         } catch (Exception $ex) {

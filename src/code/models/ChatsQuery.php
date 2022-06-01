@@ -8,6 +8,15 @@ use code\models\Base\ChatsQuery as BaseChatsQuery;
 class ChatsQuery extends BaseChatsQuery
 {
 
+    /**
+     * 
+     * @param int $page
+     * @param int $maxPerPage
+     * @param string $order
+     * @param string $orderBy
+     * @param array $filters
+     * @return array
+     */
     public function listLast($page = 1, $maxPerPage = 10, string $order = "desc", string $orderBy = "last_message_at", $filters = []) {
         $query = $this->buildQuery($filters);
         if (!empty($orderBy)) {
@@ -16,6 +25,11 @@ class ChatsQuery extends BaseChatsQuery
         return $query->paginate($page, $maxPerPage)->getResults()->toArray();
     }
 
+    /**
+     * 
+     * @param array $filters
+     * @return int
+     */
     public function getCount($filters = []) {
         $query = $this->buildQuery($filters);
         return $query->count();
