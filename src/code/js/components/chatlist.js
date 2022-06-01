@@ -166,7 +166,7 @@ const ChatList = props => {
     const onGetChats = (chatList) => {
         setLoadChats(false);
         const oldChats = chats !== null ? chats : {};
-        const newChats = _.mapKeys({...chatList}, "id");
+        const newChats = _.mapKeys({...chatList}, "Id");
         const allChats = {...oldChats, ...newChats};
         setChats(allChats);
         interval > chatList.length && setHasMoreChats(false);
