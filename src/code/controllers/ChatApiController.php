@@ -8,14 +8,12 @@ use code\models\ChatsQuery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-
-
-class ChatApiController extends AppController{
+class ChatApiController extends AppController {
 
     public function __construct() {
         $this->setComponent(ApiAppFactory::getApp()->getComponent(ApiChat::getName()));
     }
-    
+
     /**
      * 
      * @param ServerRequestInterface $request
@@ -38,4 +36,25 @@ class ChatApiController extends AppController{
         $this->response->withHeader("Content-Type", "application/json")->getBody()->write(json_encode($result, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
         return $this->response;
     }
+
+    /**
+     * 
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+        $this->setResponse($response)->setRequest($request);
+        $data = $this->getRequest()->getParsedBody();
+        $chat = new \code\models\Chats();
+        $chat->setUserid(ApiAppFactory::getApp()->getParams()["uid"]);
+        $chat->setLastMessageAt(date("Y-m-d H:i:s"));
+        $chat->setUseridConect($data['Id']);
+       
+        $chat->save();
+        $response->getBody()->write(json_encode(['succesful']));
+        return $response;
+    }
+
 }
