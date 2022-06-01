@@ -13,6 +13,7 @@ return Arr::mergeRecursive(
                         ['lib' => 'js/components/float/float.js', 'tranlsator' => 'text/babel'],
                         ['lib' => 'js/components/boop/boop.js', 'tranlsator' => 'text/babel'],
                         ['lib' => 'js/components/button/button.js', 'tranlsator' => 'text/babel'],
+                        ['lib' => 'js/components/chatlist.js', 'tranlsator' => 'text/babel'],
                     ],
                 ],
                 require 'routes.php');
