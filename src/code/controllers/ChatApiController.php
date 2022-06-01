@@ -48,7 +48,7 @@ class ChatApiController extends AppController {
         $this->setResponse($response)->setRequest($request);
         $data = $this->getRequest()->getParsedBody();
         $chat = new \code\models\Chats();
-        $chat->setUserid(ApiAppFactory::getApp()->getParams()["uid"]);
+        $chat->setUserid(ApiAppFactory::getApp()->getUserId());
         $chat->setLastMessageAt(date("Y-m-d H:i:s"));
         $chat->setUseridConect($data['Id']);
        

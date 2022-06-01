@@ -17,6 +17,7 @@ function IndexPage(props) {
 
     const [open, setOpen] = React.useState(false);
     const [waiting, setWaiting] = React.useState(false);
+    
     const handleOpen = () => {
         setOpen(true);
     };
@@ -51,77 +52,76 @@ function IndexPage(props) {
     ];
     
     
-    const handleAgree = async () => {
+    const handleAgree = async (data) => {
       setOpen(false);
       if(baseApp.isWeb()){
             setWaiting(true);
-            var result = await baseApp.fetch(props.apiGateway + "/api/user/delete",data);
+            var result = await baseApp.post(props.apiGateway + "/api/chat/create",data);
             
             if(result.status == "success"){
                  setWaiting(false);
-                 setRefresh(true);
              }else{
                  if(result.status == "error")
                  {
                      setWaiting(false);
                  }
              }
-              setRefresh(false);
       }
-      setData([]);
+      
     };
   
     const actions = [
        {
-           icon: 'edit',
-           tooltip: 'Edit Index',
+           icon: 'add_link',
+           tooltip: 'Link',
            text: '',
            onClick: (event, rowData) => {
                if(baseApp.isWeb()){
                    event.preventDefault();
-                   /*setData(rowData);*/
-                   setWaiting(true);
-                   let path = "/formuser?id=" + rowData.Id;
-                   baseApp.redirect(path, props.apiGateway);
+                   handleAgree(rowData);
                }
-           }
-       },
-       {
-           icon: 'delete',
-           tooltip: 'Delete Index',
-           text: '',
-           onClick: (event, rowData) => {
-              setData(rowData);
-              setOpen(true);
            }
        }
    ];
     
-    const createuser = (e) => {
-      e.preventDefault();
-      setWaiting(true);
-      let path = "/formuser";
-      baseApp.redirect(path, props.apiGateway);
-    };
-    
     
     return (
             <div>
-                <Backdrop
-                    sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                    open={waiting}
-                >
-                    <CircularProgress color="inherit" />
-                </Backdrop>
+            	<React.Fragment>
+                    <CssBaseline />
+		    <Backdrop
+		        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+		        open={waiting}
+		    >
+		        <CircularProgress color="inherit" />
+		    </Backdrop>
+		 <Container maxWidth="mm" id="pageContainer">
                 <Float>
                     <span> {baseApp.translations().t("save", "dashboard")} </span>
                 </Float >
                 <Boop triggers={"onMouseEnter"} rotation="90">
                     <span> {baseApp.translations().t("boop", "dashboard")} </span>
                 </Boop >
-                <Float>
-                    <ChatButton value={baseApp.translations().t("add", "dashboard")} icon="user-add"  onClick={handleOpen}/>
-                </Float >
+                <Box>
+                	<Box xs={8} pb={2}>
+		        <Float>
+		            <ChatButton value={baseApp.translations().t("add", "dashboard")} icon="user-add"  onClick={handleOpen}/>
+		        </Float >
+		        </Box>
+		  <Grid container spacing={2}>
+                      <Grid item xs={4}>   
+                      <Box width={350} height={"100vh"}>    
+                	<ChatList/>
+                	</Box>
+                      </Grid>
+                      <Grid item xs={4}>   
+                      <Box width={"80vh"}>    
+                	<ChatList/>
+                	</Box>
+                
+                      </Grid>
+                </Grid>
+                </Box>                   
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -154,6 +154,8 @@ function IndexPage(props) {
                         </Stack>
                     </Box>
                 </Modal>
+              </Container>
+                </React.Fragment>
             </div>
 
             );
