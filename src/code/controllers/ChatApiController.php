@@ -4,6 +4,7 @@ namespace code\controllers;
 
 use code\ApiChat;
 use code\applications\ApiAppFactory;
+use code\models\Chats;
 use code\models\ChatsQuery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -47,7 +48,7 @@ class ChatApiController extends AppController {
     public function create(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
         $this->setResponse($response)->setRequest($request);
         $data = $this->getRequest()->getParsedBody();
-        $chat = new \code\models\Chats();
+        $chat = new Chats();
         $chat->setUserid(ApiAppFactory::getApp()->getUserId());
         $chat->setLastMessageAt(date("Y-m-d H:i:s"));
         $chat->setUseridConect($data['Id']);
